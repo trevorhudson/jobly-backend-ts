@@ -1,7 +1,7 @@
-const bcrypt = require("bcrypt");
+import bcrypt from "bcrypt";
 
-const db = require("../db.js");
-const { BCRYPT_WORK_FACTOR } = require("../config");
+import db from "../db.js";
+import { BCRYPT_WORK_FACTOR } from "../config";
 
 const testJobIds = [];
 
@@ -35,15 +35,15 @@ async function commonBeforeAll() {
         VALUES ('u1', $1, 'U1F', 'U1L', 'u1@email.com'),
                ('u2', $2, 'U2F', 'U2L', 'u2@email.com')
         RETURNING username`,
-      [
-        await bcrypt.hash("password1", BCRYPT_WORK_FACTOR),
-        await bcrypt.hash("password2", BCRYPT_WORK_FACTOR),
-      ]);
+    [
+      await bcrypt.hash("password1", BCRYPT_WORK_FACTOR),
+      await bcrypt.hash("password2", BCRYPT_WORK_FACTOR),
+    ]);
 
   await db.query(`
         INSERT INTO applications(username, job_id)
         VALUES ('u1', $1)`,
-      [testJobIds[0]]);
+    [testJobIds[0]]);
 }
 
 async function commonBeforeEach() {

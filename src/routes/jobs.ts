@@ -2,15 +2,15 @@
 
 /** Routes for jobs. */
 
-const jsonschema = require("jsonschema");
+import jsonschema from "jsonschema";
 
-const express = require("express");
-const { BadRequestError } = require("../expressError");
-const { ensureAdmin } = require("../middleware/auth");
-const Job = require("../models/job");
-const jobNewSchema = require("../schemas/jobNew.json");
-const jobUpdateSchema = require("../schemas/jobUpdate.json");
-const jobSearchSchema = require("../schemas/jobSearch.json");
+import express from "express";
+import { BadRequestError } from "../expressError";
+import { ensureAdmin } from "../middleware/auth";
+import Job from "../models/job";
+import jobNewSchema from "../schemas/jobNew.json";
+import jobUpdateSchema from "../schemas/jobUpdate.json";
+import jobSearchSchema from "../schemas/jobSearch.json";
 
 const router = express.Router({ mergeParams: true });
 
@@ -28,7 +28,7 @@ router.post("/", ensureAdmin, async function (req, res, next) {
   const validator = jsonschema.validate(
     req.body,
     jobNewSchema,
-    {required: true}
+    { required: true }
   );
   if (!validator.valid) {
     const errs = validator.errors.map(e => e.stack);
@@ -59,7 +59,7 @@ router.get("/", async function (req, res, next) {
   const validator = jsonschema.validate(
     q,
     jobSearchSchema,
-    {required: true}
+    { required: true }
   );
   if (!validator.valid) {
     const errs = validator.errors.map(e => e.stack);
@@ -97,7 +97,7 @@ router.patch("/:id", ensureAdmin, async function (req, res, next) {
   const validator = jsonschema.validate(
     req.body,
     jobUpdateSchema,
-    {required: true}
+    { required: true }
   );
   if (!validator.valid) {
     const errs = validator.errors.map(e => e.stack);
@@ -119,4 +119,4 @@ router.delete("/:id", ensureAdmin, async function (req, res, next) {
 });
 
 
-module.exports = router;
+export = router;

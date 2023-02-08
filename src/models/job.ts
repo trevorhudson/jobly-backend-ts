@@ -1,8 +1,8 @@
 "use strict";
 
-const db = require("../db");
-const { NotFoundError } = require("../expressError");
-const { sqlForPartialUpdate } = require("../helpers/sql");
+import db from "../db";
+import { NotFoundError } from "../expressError";
+import { sqlForPartialUpdate } from "../helpers/sql";
 
 
 /** Related functions for companies. */
@@ -191,4 +191,4 @@ class Job {
   }
 }
 
-module.exports = Job;
+export = Job;

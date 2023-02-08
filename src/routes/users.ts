@@ -2,15 +2,15 @@
 
 /** Routes for users. */
 
-const jsonschema = require("jsonschema");
+import jsonschema from "jsonschema";
 
-const express = require("express");
-const { ensureCorrectUserOrAdmin, ensureAdmin } = require("../middleware/auth");
-const { BadRequestError } = require("../expressError");
-const User = require("../models/user");
-const { createToken } = require("../helpers/tokens");
-const userNewSchema = require("../schemas/userNew.json");
-const userUpdateSchema = require("../schemas/userUpdate.json");
+import express from "express";
+import { ensureCorrectUserOrAdmin, ensureAdmin } from "../middleware/auth";
+import { BadRequestError } from "../expressError";
+import User from "../models/user";
+import { createToken } from "../helpers/tokens";
+import userNewSchema from "../schemas/userNew.json";
+import userUpdateSchema from "../schemas/userUpdate.json";
 
 const router = express.Router();
 
