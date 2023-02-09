@@ -54,7 +54,7 @@ router.get("/", async function (req, res, next) {
   const q = req.query;
   // arrive as strings from querystring, but we want as int/bool
   if (q.minSalary !== undefined) q.minSalary = +q.minSalary;
-  q.hasEquity = q.hasEquity === "true";
+  q.hasEquity = q.hasEquity === "true"
 
   const validator = jsonschema.validate(
     q,

@@ -13,7 +13,7 @@ import companyNewSchema from "../schemas/companyNew.json";
 import companyUpdateSchema from "../schemas/companyUpdate.json";
 import companySearchSchema from "../schemas/companySearch.json";
 
-const router = new express.Router();
+const router = express.Router();
 
 
 /** POST / { company } =>  { company }

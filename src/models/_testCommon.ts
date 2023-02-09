@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import db from "../db.js";
 import { BCRYPT_WORK_FACTOR } from "../config";
 
-const testJobIds = [];
+const testJobIds: string[] = [];
 
 async function commonBeforeAll() {
   // noinspection SqlWithoutWhere
@@ -24,6 +24,7 @@ async function commonBeforeAll() {
            ('Job3', 300, '0', 'c1'),
            ('Job4', NULL, NULL, 'c1')
     RETURNING id`);
+
   testJobIds.splice(0, 0, ...resultsJobs.rows.map(r => r.id));
 
   await db.query(`

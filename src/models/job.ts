@@ -6,7 +6,11 @@ import { sqlForPartialUpdate } from "../helpers/sql";
 
 
 /** Related functions for companies. */
-
+interface _filterWhereBuilderInterface {
+  minSalary: number,
+  hasEquity: boolean,
+  title: string;
+}
 class Job {
   /** Create a job (from data), update db, return new job data.
    *
@@ -48,9 +52,9 @@ class Job {
  * }
  */
 
-  static _filterWhereBuilder({ minSalary, hasEquity, title }) {
-    let whereParts = [];
-    let vals = [];
+  static _filterWhereBuilder({ minSalary, hasEquity, title }: _filterWhereBuilderInterface) {
+    let whereParts: string[] = [];
+    let vals: Array<number | string> = [];
 
     if (minSalary !== undefined) {
       vals.push(minSalary);
@@ -83,7 +87,7 @@ class Job {
    * Returns [{ id, title, salary, equity, companyHandle, companyName }, ...]
    * */
 
-  static async findAll({ minSalary, hasEquity, title } = {}) {
+  static async findAll({ minSalary, hasEquity, title }: any = {}) {
 
     const { where, vals } = this._filterWhereBuilder({
       minSalary, hasEquity, title,

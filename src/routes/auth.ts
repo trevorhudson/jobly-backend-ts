@@ -6,7 +6,7 @@ import jsonschema from "jsonschema";
 
 import User from "../models/user";
 import express from "express";
-const router = new express.Router();
+const router = express.Router();
 import { createToken } from "../helpers/tokens";
 import userAuthSchema from "../schemas/userAuth.json";
 import userRegisterSchema from "../schemas/userRegister.json";
