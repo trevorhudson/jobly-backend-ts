@@ -36,7 +36,7 @@ router.post("/", ensureAdmin, async function (req, res, next) {
     );
     if (!validator.valid) {
       const errs = validator.errors.map(e => e.stack);
-      throw new BadRequestError(errs);
+      throw new BadRequestError(...errs);
     }
 
     const user = await User.register(req.body);
@@ -102,7 +102,7 @@ router.patch("/:username", ensureCorrectUserOrAdmin, async function (req, res, n
     );
     if (!validator.valid) {
       const errs = validator.errors.map(e => e.stack);
-      throw new BadRequestError(errs);
+      throw new BadRequestError(...errs);
     }
 
     const user = await User.update(req.params.username, req.body);
@@ -146,4 +146,4 @@ router.post("/:username/jobs/:id", ensureCorrectUserOrAdmin, async function (req
 });
 
 
-module.exports = router;
+export = router;
