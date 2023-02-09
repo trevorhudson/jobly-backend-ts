@@ -5,7 +5,12 @@ import { BadRequestError, NotFoundError } from "../expressError";
 import { sqlForPartialUpdate } from "../helpers/sql";
 
 /** Related functions for companies. */
+interface _filterWhereBuilderInterface {
+  minEmployees: number,
+  maxEmployees: number,
+  nameLike: string
 
+}
 class Company {
   /** Create a company (from data), update db, return new company data.
    *
@@ -45,6 +50,7 @@ class Company {
     return company;
   }
 
+
   /** Create WHERE clause for filters, to be used by functions that query
    * with filters.
    *
@@ -59,9 +65,9 @@ class Company {
    * }
    */
 
-  static _filterWhereBuilder({ minEmployees, maxEmployees, nameLike }) {
-    let whereParts = [];
-    let vals = [];
+  static _filterWhereBuilder({ minEmployees, maxEmployees, nameLike }: _filterWhereBuilderInterface) {
+    let whereParts: string[] = [];
+    let vals: Array<number | string> = [];
 
     if (minEmployees !== undefined) {
       vals.push(minEmployees);
@@ -95,7 +101,7 @@ class Company {
    * Returns [{ handle, name, description, numEmployees, logoUrl }, ...]
    * */
 
-  static async findAll(searchFilters = {}) {
+  static async findAll(searchFilters: _filterWhereBuilderInterface | any = {}) {
     const { minEmployees, maxEmployees, nameLike } = searchFilters;
 
     if (minEmployees > maxEmployees) {
@@ -126,7 +132,7 @@ class Company {
    * Throws NotFoundError if not found.
    **/
 
-  static async get(handle) {
+  static async get(handle: string) {
     const companyRes = await db.query(
       `SELECT handle,
                 name,
@@ -166,7 +172,7 @@ class Company {
    * Throws NotFoundError if not found.
    */
 
-  static async update(handle, data) {
+  static async update(handle: string, data: { name?: string; description?: string; numEmployees?: number | null; logoUrl?: string | null; }) {
     const { setCols, values } = sqlForPartialUpdate(
       data,
       {
@@ -192,7 +198,7 @@ class Company {
    * Throws NotFoundError if company not found.
    **/
 
-  static async remove(handle) {
+  static async remove(handle: string) {
     const result = await db.query(
       `DELETE
            FROM companies
